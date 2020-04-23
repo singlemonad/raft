@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package raft;
+
+import "google/protobuf/any.proto";
+
+message Entry {
+  int64 term = 2;
+  google.protobuf.Any body = 3;
+}
+
+enum MessageType {
+  Vote = 0;
+  VoteReply = 1;
+  AppendEntries = 2;
+  AppendEntriesReply = 3;
+  ElectionTimeout = 4;
+  Puase = 5;
+}
+
+message Message {
+  MessageType type = 1;
+  int64 to = 2;
+  int64 from = 3;
+  int64 term = 4;
+  int64 logIndex = 5;
+  int64 logTerm = 6;
+  int64 commitIndex = 7;
+  repeated Entry entries = 8;
+  bool reject = 9;
+  int64 pasueTime = 10;
+}

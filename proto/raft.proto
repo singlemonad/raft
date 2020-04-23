@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package raft;
+
+import "message.proto";
+
+service Raft {
+  rpc RequestVote(Message) returns (Message);
+  rpc AppendEntries(Message) returns (Message);
+}
+
+enum OperateType {
+  Invalid = 0;
+  Get = 1;
+  Put = 2;
+  Delete = 3;
+}
+
+enum Role {
+  Follower = 0;
+  Candidate = 1;
+  Leader = 2;
+}
+
+message KV {
+    OperateType op = 1;
+    string key = 2;
+    string value = 3;
+}
